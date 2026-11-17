@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Сладкие сны — каталог</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #fdf6f0; color: #333; }
+  header { background: #6b3e26; color: #fff; padding: 20px; text-align: center; }
+  header h1 { font-size: 32px; }
+  header p { font-style: italic; margin-top: 5px; }
+  nav { background: #8b5a3c; padding: 10px; text-align: center; }
+  nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: bold; }
+
+  .filter { background: #fff; padding: 15px; margin: 20px auto; max-width: 1100px;
+            border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,.1);
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .filter select, .filter button { padding: 8px 15px; font-size: 15px; border-radius: 5px;
+                                    border: 1px solid #ccc; cursor: pointer; }
+  .filter button { background: #6b3e26; color: #fff; border: none; }
+  .filter button:hover { background: #8b5a3c; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 20px; padding: 0 20px 40px; max-width: 1100px; margin: 0 auto; }
+  .card { background: #fff; border-radius: 8px; overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .card img { width: 100%; height: 200px; object-fit: cover; }
+  .card-body { padding: 15px; }
+  .card-body h3 { color: #6b3e26; margin-bottom: 10px; }
+  .card-body p { margin: 5px 0; font-size: 15px; }
+  .card-body .price { font-size: 20px; color: #b12704; font-weight: bold; }
+  .card-body .btn { display: inline-block; margin-top: 10px; background: #6b3e26;
+                    color: #fff; padding: 8px 20px; text-decoration: none;
+                    border-radius: 5px; }
+  .card-body .btn:hover { background: #8b5a3c; }
+
+  footer { background: #333; color: #ddd; padding: 20px; text-align: center;
+           font-size: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Сладкие сны</h1>
+  <p>Спите как в сказке</p>
+</header>
+
+<nav>
+  <a href="index.html">Главная</a>
+  <a href="catalog.html">Каталог</a>
+</nav>
+
+<div class="filter">
+  <label>Категория:
+    <select id="categoryFilter">
+      <option value="">Все категории</option>
+      <option value="Стандартный">Стандартный</option>
+      <option value="Студия">Студия</option>
+      <option value="Люкс">Люкс</option>
+    </select>
+  </label>
+  <button id="applyBtn">Применить</button>
+  <button id="resetBtn" style="background:#888">Сбросить фильтр</button>
+</div>
+
+<div class="grid" id="grid">
+
+  <!-- Карточка 1 -->
+  <div class="card" data-category="Стандартный">
+    <img src="https://picsum.photos/seed/room1/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Стандартный номер</h3>
+      <p class="price">2 500 ₽ / сутки</p>
+      <p>Мест: 2 • Площадь: 18 м²</p>
+      <p>Wi-Fi, ТВ, кондиционер</p>
+      <a class="btn" href="booking.html?room=1">Забронировать</a>
+    </div>
+  </div>
+
+  <!-- Карточка 2 -->
+  <div class="card" data-category="Стандартный">
+    <img src="https://picsum.photos/seed/room2/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Стандартный с видом на город</h3>
+      <p class="price">2 700 ₽ / сутки</p>
+      <p>Мест: 2 • Площадь: 20 м²</p>
+      <p>Wi-Fi, ТВ, холодильник</p>
+      <a class="btn" href="booking.html?room=2">Забронировать</a>
+    </div>
+  </div>
+
+  <!-- Карточка 3 -->
+  <div class="card" data-category="Студия">
+    <img src="https://picsum.photos/seed/room3/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Студия</h3>
+      <p class="price">4 000 ₽ / сутки</p>
+      <p>Мест: 3 • Площадь: 28 м²</p>
+      <p>Wi-Fi, ТВ, кухня</p>
+      <a class="btn" href="booking.html?room=3">Забронировать</a>
+    </div>
+  </div>
+
+  <!-- Карточка 4 -->
+  <div class="card" data-category="Студия">
+    <img src="https://picsum.photos/seed/room4/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Студия с балконом</h3>
+      <p class="price">4 200 ₽ / сутки</p>
+      <p>Мест: 3 • Площадь: 30 м²</p>
+      <p>Wi-Fi, ТВ, балкон</p>
+      <a class="btn" href="booking.html?room=4">Забронировать</a>
+    </div>
+  </div>
+
+  <!-- Карточка 5 -->
+  <div class="card" data-category="Люкс">
+    <img src="https://picsum.photos/seed/room5/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Люкс</h3>
+      <p class="price">7 000 ₽ / сутки</p>
+      <p>Мест: 4 • Площадь: 45 м²</p>
+      <p>Wi-Fi, ТВ, джакузи, кондиционер</p>
+      <a class="btn" href="booking.html?room=5">Забронировать</a>
+    </div>
+  </div>
+
+  <!-- Карточка 6 -->
+  <div class="card" data-category="Люкс">
+    <img src="https://picsum.photos/seed/room6/400/250" alt="Номер">
+    <div class="card-body">
+      <h3>Люкс с панорамным видом</h3>
+      <p class="price">7 500 ₽ / сутки</p>
+      <p>Мест: 4 • Площадь: 50 м²</p>
+      <p>Wi-Fi, ТВ, джакузи, панорама</p>
+      <a class="btn" href="booking.html?room=6">Забронировать</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Контакты</strong></p>
+  <p>Адрес: г. Москва, ул. Сонная, д. 1 | Режим работы: круглосуточно</p>
+  <p>Телефон: +7 (495) 123-45-67 | E-mail: info@sweetdreams.ru</p>
+</footer>
+
+<script>
+  // Фильтрация на клиенте (в Задании 3 будет на сервере)
+  const cards = document.querySelectorAll('.card');
+  const select = document.getElementById('categoryFilter');
+
+  document.getElementById('applyBtn').onclick = () => {
+    const val = select.value;
+    cards.forEach(c => {
+      c.style.display = (!val || c.dataset.category === val) ? 'block' : 'none';
+    });
+  };
+
+  document.getElementById('resetBtn').onclick = () => {
+    select.value = '';
+    cards.forEach(c => c.style.display = 'block');
+  };
+</script>
+
+</body>
+</html>

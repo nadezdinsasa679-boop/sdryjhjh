@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Сладкие сны — бронирование</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #fdf6f0; color: #333; }
+  header { background: #6b3e26; color: #fff; padding: 20px; text-align: center; }
+  header h1 { font-size: 32px; }
+  header p { font-style: italic; margin-top: 5px; }
+  nav { background: #8b5a3c; padding: 10px; text-align: center; }
+  nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: bold; }
+
+  .form-box { background: #fff; max-width: 500px; margin: 30px auto;
+              padding: 25px; border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .form-box h2 { color: #6b3e26; margin-bottom: 20px; text-align: center; }
+  label { display: block; margin: 12px 0 5px; font-weight: bold; }
+  input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;
+          font-size: 15px; }
+  input:focus { outline: 2px solid #8b5a3c; }
+  .error { color: #b12704; font-size: 13px; margin-top: 3px; display: none; }
+  .btn { width: 100%; background: #6b3e26; color: #fff; border: none;
+         padding: 12px; font-size: 17px; border-radius: 5px; cursor: pointer;
+         margin-top: 20px; }
+  .btn:hover { background: #8b5a3c; }
+  .success { background: #d4edda; color: #155724; padding: 15px;
+             border-radius: 5px; text-align: center; font-weight: bold; }
+
+  footer { background: #333; color: #ddd; padding: 20px; text-align: center;
+           font-size: 14px; line-height: 1.6; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Сладкие сны</h1>
+  <p>Спите как в сказке</p>
+</header>
+
+<nav>
+  <a href="index.html">Главная</a>
+  <a href="catalog.html">Каталог</a>
+</nav>
+
+<div class="form-box">
+  <h2>Бронирование номера</h2>
+
+  <div id="successMsg" class="success" style="display:none">
+    Заявка успешно отправлена! Мы свяжемся с вами.
+  </div>
+
+  <form id="bookingForm" novalidate>
+
+    <label>Имя *</label>
+    <input type="text" name="first_name" id="first_name" placeholder="Иван">
+    <div class="error" id="err_first_name">Только русские буквы, пробелы, точки, тире</div>
+
+    <label>Фамилия *</label>
+    <input type="text" name="last_name" id="last_name" placeholder="Иванов">
+    <div class="error" id="err_last_name">Только русские буквы, пробелы, точки, тире</div>
+
+    <label>Телефон *</label>
+    <input type="text" name="phone" id="phone" placeholder="+7(999)123-45-67">
+    <div class="error" id="err_phone">Формат: +7(XXX)XXX-XX-XX</div>
+
+    <label>E-mail *</label>
+    <input type="text" name="email" id="email" placeholder="ivan@mail.ru">
+    <div class="error" id="err_email">Введите корректный e-mail</div>
+
+    <label>Дата заезда * (ДД.ММ.ГГГГ)</label>
+    <input type="text" name="check_in" id="check_in" placeholder="01.06.2025">
+    <div class="error" id="err_check_in">Формат: ДД.ММ.ГГГГ, не раньше сегодня</div>
+
+    <label>Дата выезда * (ДД.ММ.ГГГГ)</label>
+    <input type="text" name="check_out" id="check_out" placeholder="05.06.2025">
+    <div class="error" id="err_check_out">Формат: ДД.ММ.ГГГГ, позже даты заезда</div>
+
+    <button type="submit" class="btn">Отправить заявку</button>
+  </form>
+</div>
+
+<footer>
+  <p><strong>Контакты</strong></p>
+  <p>Адрес: г. Москва, ул. Сонная, д. 1 | Режим работы: круглосуточно</p>
+  <p>Телефон: +7 (495) 123-45-67 | E-mail: info@sweetdreams.ru</p>
+</footer>
+
+<script>
+  // Валидация формы (в Задании 3 будет на сервере)
+  const form = document.getElementById('bookingForm');
+
+  function showError(id, show) {
+    document.getElementById('err_' + id).style.display = show ? 'block' : 'none';
+  }
+
+  function parseDate(str) {
+    const m = str.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if (!m) return null;
+    const d = new Date(m[3], m[2] - 1, m[1]);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  form.onsubmit = function (e) {
+    e.preventDefault();
+    let ok = true;
+
+    const first = document.getElementById('first_name').value.trim();
+    const last  = document.getElementById('last_name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const inVal = document.getElementById('check_in').value.trim();
+    const outVal= document.getElementById('check_out').value.trim();
+
+    const nameRe = /^[А-Яа-яЁё\s\.\-]+$/;
+    const phoneRe = /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nameRe.test(first)) { showError('first_name', true); ok = false; }
+    else showError('first_name', false);
+
+    if (!nameRe.test(last)) { showError('last_name', true); ok = false; }
+    else showError('last_name', false);
+
+    if (!phoneRe.test(phone)) { showError('phone', true); ok = false; }
+    else showError('phone', false);
+
+    if (!emailRe.test(email)) { showError('email', true); ok = false; }
+    else showError('email', false);
+
+    const d1 = parseDate(inVal);
+    const d2 = parseDate(outVal);
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    if (!d1 || d1 < today) { showError('check_in', true); ok = false; }
+    else showError('check_in', false);
+
+    if (!d2 || (d1 && d2 <= d1)) { showError('check_out', true); ok = false; }
+    else showError('check_out', false);
+
+    if (ok) {
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  };
+</script>
+
+</body>
+</html>
